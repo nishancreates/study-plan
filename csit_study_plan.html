@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My CSIT Board Prep — Semester 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0a0a0f;--bg2:#111118;--bg3:#18181f;--card:#1a1a24;
+    --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);
+    --text:#e8e8f0;--muted:#7a7a90;--dim:#3a3a50;
+    --accent:#7c6fff;--accent2:#a78bfa;
+    --teal:#2dd4bf;--amber:#f59e0b;--coral:#fb7185;--green:#4ade80;--blue:#60a5fa;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.6;min-height:100vh;overflow-x:hidden;}
+  body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(124,111,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(124,111,255,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
+  .orb{position:fixed;border-radius:50%;filter:blur(120px);opacity:0.12;pointer-events:none;z-index:0;animation:drift 20s ease-in-out infinite alternate;}
+  .orb1{width:600px;height:600px;background:var(--accent);top:-200px;left:-200px;}
+  .orb2{width:400px;height:400px;background:var(--teal);bottom:-100px;right:-100px;animation-delay:-10s;}
+  @keyframes drift{from{transform:translate(0,0);}to{transform:translate(40px,30px);}}
+  .container{max-width:900px;margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+
+  .hero{padding:72px 0 48px;}
+  .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(124,111,255,0.12);border:1px solid rgba(124,111,255,0.25);border-radius:100px;padding:5px 14px;font-family:'DM Mono',monospace;font-size:11px;color:var(--accent2);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:20px;animation:fadeUp 0.6s ease both;}
+  .hero-badge::before{content:'●';font-size:8px;color:var(--teal);animation:blink 2s ease-in-out infinite;}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+  .hero h1{font-family:'Syne',sans-serif;font-size:clamp(32px,5.5vw,58px);font-weight:800;line-height:1.05;letter-spacing:-0.03em;margin-bottom:12px;animation:fadeUp 0.6s ease 0.1s both;}
+  .hero h1 span{color:var(--accent2);}
+  .hero-sub{font-size:15px;color:var(--muted);animation:fadeUp 0.6s ease 0.2s both;}
+  .hero-stats{display:flex;gap:28px;margin-top:32px;flex-wrap:wrap;animation:fadeUp 0.6s ease 0.3s both;}
+  .stat{display:flex;flex-direction:column;}
+  .stat-num{font-family:'Syne',sans-serif;font-size:26px;font-weight:700;}
+  .stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+
+  .section{margin-bottom:60px;}
+  .section-label{font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+  .section-label::after{content:'';flex:1;height:1px;background:var(--border2);}
+
+  .countdown-strip{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;margin-bottom:48px;flex-wrap:wrap;gap:14px;}
+  .cd-label{font-size:12px;color:var(--muted);}
+  .cd-num{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:var(--accent2);}
+  .cd-days{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;}
+  .cd-progress{flex:1;min-width:200px;}
+  .cd-row{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:8px;}
+  .cd-track{height:4px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;}
+  .cd-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--accent),var(--teal));transition:width 1.5s ease 0.5s;}
+
+  .subjects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+  @media(max-width:620px){.subjects-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:400px){.subjects-grid{grid-template-columns:1fr;}}
+
+  .subj-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;position:relative;overflow:hidden;transition:border-color 0.2s,transform 0.2s;}
+  .subj-card:hover{border-color:var(--border2);transform:translateY(-2px);}
+  .subj-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+  .subj-card.purple::before{background:linear-gradient(90deg,var(--accent),var(--accent2));}
+  .subj-card.teal::before{background:linear-gradient(90deg,var(--teal),#67e8f9);}
+  .subj-card.amber::before{background:linear-gradient(90deg,var(--amber),#fcd34d);}
+  .subj-card.coral::before{background:linear-gradient(90deg,var(--coral),#fda4af);}
+  .subj-card.blue::before{background:linear-gradient(90deg,var(--blue),#93c5fd);}
+  .subj-card.gray::before{background:linear-gradient(90deg,#6b7280,#9ca3af);}
+
+  .subj-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;}
+  .subj-name{font-family:'Syne',sans-serif;font-size:13px;font-weight:600;}
+  .subj-pct{font-family:'DM Mono',monospace;font-size:11px;color:var(--accent2);}
+  .subj-hrs-row{display:flex;align-items:center;gap:6px;margin-bottom:10px;}
+  .hrs-input{background:rgba(255,255,255,0.05);border:1px solid var(--border2);border-radius:6px;color:var(--text);font-family:'DM Mono',monospace;font-size:12px;width:44px;padding:2px 6px;text-align:center;outline:none;transition:border-color 0.2s,background 0.2s;}
+  .hrs-input:focus{border-color:var(--accent);background:rgba(124,111,255,0.12);}
+  .hrs-of{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);}
+  .bar-track{height:4px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;margin-bottom:8px;}
+  .bar-fill{height:100%;border-radius:2px;transition:width 0.6s ease;}
+  .purple .bar-fill{background:var(--accent2);}
+  .teal   .bar-fill{background:var(--teal);}
+  .amber  .bar-fill{background:var(--amber);}
+  .coral  .bar-fill{background:var(--coral);}
+  .blue   .bar-fill{background:var(--blue);}
+  .gray   .bar-fill{background:#9ca3af;}
+  .subj-status{font-size:10px;color:var(--muted);}
+
+  .overall-bar-wrap{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin-bottom:12px;}
+  .overall-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+  .overall-label{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);}
+  .overall-pct{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--accent2);}
+  .overall-track{height:6px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden;}
+  .overall-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent),var(--teal));transition:width 0.6s ease;}
+
+  .tabs{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap;}
+  .tab-btn{font-family:'DM Mono',monospace;font-size:12px;padding:6px 16px;border-radius:100px;border:1px solid var(--border2);background:transparent;color:var(--muted);cursor:pointer;transition:all 0.2s;}
+  .tab-btn:hover{color:var(--text);background:var(--bg3);}
+  .tab-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .week-panel{display:none;}
+  .week-panel.active{display:block;animation:fadeIn 0.3s ease;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+  .week-tip{background:rgba(124,111,255,0.08);border:1px solid rgba(124,111,255,0.2);border-radius:10px;padding:12px 16px;font-size:13px;color:var(--muted);margin-bottom:16px;display:flex;align-items:flex-start;gap:10px;}
+  .week-tip::before{content:'→';color:var(--accent);flex-shrink:0;}
+
+  .task-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin-bottom:10px;transition:border-color 0.2s;}
+  .task-card:hover{border-color:var(--border2);}
+  .task-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:8px;flex-wrap:wrap;}
+  .task-name{font-family:'Syne',sans-serif;font-size:15px;font-weight:600;}
+  .task-badge{font-family:'DM Mono',monospace;font-size:11px;padding:3px 12px;border-radius:100px;border:1px solid;white-space:nowrap;}
+  .badge-purple{color:var(--accent2);border-color:rgba(167,139,250,0.3);background:rgba(167,139,250,0.08);}
+  .badge-teal{color:var(--teal);border-color:rgba(45,212,191,0.3);background:rgba(45,212,191,0.08);}
+  .badge-amber{color:var(--amber);border-color:rgba(245,158,11,0.3);background:rgba(245,158,11,0.08);}
+  .badge-coral{color:var(--coral);border-color:rgba(251,113,133,0.3);background:rgba(251,113,133,0.08);}
+  .badge-gray{color:var(--muted);border-color:var(--border2);background:var(--bg3);}
+
+  .topics{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;}
+  .topic-check{display:flex;align-items:center;gap:6px;cursor:pointer;padding:4px 10px;border-radius:6px;background:rgba(255,255,255,0.03);border:1px solid var(--border);transition:all 0.15s;user-select:none;}
+  .topic-check:hover{border-color:var(--border2);background:rgba(255,255,255,0.06);}
+  .check-box{width:14px;height:14px;border-radius:3px;border:1.5px solid var(--dim);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.15s;font-size:9px;color:#fff;font-weight:700;}
+  .topic-check.done .check-box{background:var(--accent);border-color:var(--accent);}
+  .topic-check.done .check-label{color:var(--dim);text-decoration:line-through;}
+  .check-label{font-size:12px;color:var(--muted);}
+  .task-detail{font-size:13px;color:var(--muted);line-height:1.65;border-top:1px solid var(--border);padding-top:10px;margin-top:4px;}
+
+  .schedule-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  @media(max-width:500px){.schedule-grid{grid-template-columns:1fr;}}
+  .slot-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;}
+  .slot-time{font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);margin-bottom:5px;}
+  .slot-part{font-family:'Syne',sans-serif;font-size:15px;font-weight:600;margin-bottom:4px;}
+  .slot-desc{font-size:13px;color:var(--muted);}
+
+  .res-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+  @media(max-width:500px){.res-grid{grid-template-columns:1fr;}}
+  .res-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;display:flex;align-items:flex-start;gap:12px;}
+  .res-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+  .res-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:600;margin-bottom:2px;}
+  .res-desc{font-size:12px;color:var(--muted);}
+
+  .tips-list{display:flex;flex-direction:column;gap:8px;}
+  .tip-row{display:flex;align-items:flex-start;gap:12px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;}
+  .tip-num{font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);background:rgba(124,111,255,0.1);border-radius:6px;width:24px;height:24px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+  .tip-text{font-size:13px;color:var(--text);line-height:1.65;}
+  .tip-text strong{color:var(--accent2);font-weight:500;}
+
+  .section-actions{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+  .section-actions .section-label{margin-bottom:0;flex:1;}
+  .reset-btn{font-family:'DM Mono',monospace;font-size:11px;padding:5px 12px;border-radius:100px;border:1px solid var(--border2);background:transparent;color:var(--muted);cursor:pointer;transition:all 0.2s;white-space:nowrap;}
+  .reset-btn:hover{color:var(--coral);border-color:rgba(251,113,133,0.4);}
+
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#1e1e2e;border:1px solid var(--border2);border-radius:10px;padding:10px 18px;font-size:13px;color:var(--text);opacity:0;transition:all 0.3s;z-index:999;pointer-events:none;white-space:nowrap;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  .footer{border-top:1px solid var(--border);margin-top:80px;padding:28px 0 44px;text-align:center;font-family:'DM Mono',monospace;font-size:11px;color:var(--dim);letter-spacing:0.06em;}
+</style>
+</head>
+<body>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="toast" id="toast"></div>
+
+<div class="container">
+
+  <div class="hero">
+    <div class="hero-badge">BSc CSIT · Semester 1 · Board Prep</div>
+    <h1>Your <span>30-Day</span><br>Battle Plan.</h1>
+    <p class="hero-sub">6 subjects. 4–5 hrs/day. Track every hour, check every topic.</p>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num" id="days-left">30</span><span class="stat-label">Days Left</span></div>
+      <div class="stat"><span class="stat-num" id="total-hrs-done">0</span><span class="stat-label">Hrs Studied</span></div>
+      <div class="stat"><span class="stat-num" id="total-topics-done">0</span><span class="stat-label">Topics Done</span></div>
+      <div class="stat"><span class="stat-num" id="total-topics-all">0</span><span class="stat-label">Total Topics</span></div>
+    </div>
+  </div>
+
+  <div class="countdown-strip">
+    <div>
+      <div class="cd-label">Time remaining</div>
+      <div class="cd-num" id="cd-display">30</div>
+      <div class="cd-days">days until boards</div>
+    </div>
+    <div class="cd-progress">
+      <div class="cd-row"><span>Days elapsed</span><span id="cd-pct">0%</span></div>
+      <div class="cd-track"><div class="cd-fill" id="cd-fill" style="width:0%"></div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-actions">
+      <div class="section-label">Subject tracker</div>
+      <button class="reset-btn" onclick="confirmReset()">Reset all</button>
+    </div>
+    <div class="overall-bar-wrap">
+      <div class="overall-top">
+        <span class="overall-label">Overall hours progress</span>
+        <span class="overall-pct" id="overall-pct">0%</span>
+      </div>
+      <div class="overall-track"><div class="overall-fill" id="overall-fill" style="width:0%"></div></div>
+    </div>
+    <div class="subjects-grid" id="subjects-grid"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Weekly breakdown</div>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="showWeek(0,this)">Week 1</button>
+      <button class="tab-btn" onclick="showWeek(1,this)">Week 2</button>
+      <button class="tab-btn" onclick="showWeek(2,this)">Week 3</button>
+      <button class="tab-btn" onclick="showWeek(3,this)">Week 4</button>
+    </div>
+    <div id="week-panels"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Daily schedule</div>
+    <div class="schedule-grid">
+      <div class="slot-card"><div class="slot-time">06:00 – 08:00</div><div class="slot-part">Morning block</div><div class="slot-desc">Hardest subject (Maths or C). Brain is sharpest early — don't waste it.</div></div>
+      <div class="slot-card"><div class="slot-time">10:00 – 12:00</div><div class="slot-part">Midday block</div><div class="slot-desc">Second subject (Digital Logic or Physics). Problem-solving and PYQs.</div></div>
+      <div class="slot-card"><div class="slot-time">17:00 – 18:00</div><div class="slot-part">Evening block</div><div class="slot-desc">Light review, English, or Computer Fundamentals only.</div></div>
+      <div class="slot-card" style="border-color:rgba(124,111,255,0.25)"><div class="slot-time">Every evening · 10 min</div><div class="slot-part">Formula recall</div><div class="slot-desc">Write 5–10 key formulas from memory before bed. Highest ROI habit.</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Free resources</div>
+    <div class="res-grid">
+      <div class="res-card"><div class="res-icon" style="background:rgba(124,111,255,0.12)">📄</div><div><div class="res-title">Hamro CSIT</div><div class="res-desc">TU board PYQs going back several years — the most important resource.</div></div></div>
+      <div class="res-card"><div class="res-icon" style="background:rgba(45,212,191,0.12)">📚</div><div><div class="res-title">IOE Notes PDFs</div><div class="res-desc">Search "IOE Notes PDF" or borrow scanned notes from seniors.</div></div></div>
+      <div class="res-card"><div class="res-icon" style="background:rgba(245,158,11,0.12)">▶</div><div><div class="res-title">Neso Academy</div><div class="res-desc">YouTube — excellent for C programming and Digital Logic.</div></div></div>
+      <div class="res-card"><div class="res-icon" style="background:rgba(251,113,133,0.12)">▶</div><div><div class="res-title">TU CSIT Nepal</div><div class="res-desc">YouTube — Nepal-specific CSIT board preparation content.</div></div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Critical advice</div>
+    <div class="tips-list">
+      <div class="tip-row"><div class="tip-num">01</div><div class="tip-text"><strong>PYQ practice is non-negotiable.</strong> TU boards are heavily pattern-based. Solve at least 5 years of past papers per subject.</div></div>
+      <div class="tip-row"><div class="tip-num">02</div><div class="tip-text"><strong>Write C code on paper.</strong> The boards are handwritten. Practising only on a computer will not prepare you.</div></div>
+      <div class="tip-row"><div class="tip-num">03</div><div class="tip-text"><strong>Don't leave Maths for week 4.</strong> It needs daily practice. 30 minutes every day beats a 3-hour cram session.</div></div>
+      <div class="tip-row"><div class="tip-num">04</div><div class="tip-text"><strong>Fundamentals = easy marks.</strong> Mostly conceptual — one thorough read and a revision is enough for a strong score.</div></div>
+      <div class="tip-row"><div class="tip-num">05</div><div class="tip-text"><strong>Sleep is not optional.</strong> Studying 6 hrs sleep-deprived is worse than 4 hrs well-rested. Protect 7–8 hrs in week 4.</div></div>
+    </div>
+  </div>
+
+  <div class="footer">Made for you · BSc CSIT Sem 1 · Board Exam Prep · All the best 🤍</div>
+</div>
+
+<script>
+const SUBJECTS = [
+  {id:'maths', name:'Mathematics',        totalHrs:28, color:'purple'},
+  {id:'cprog', name:'C Programming',      totalHrs:24, color:'teal'},
+  {id:'dl',    name:'Digital Logic',      totalHrs:22, color:'amber'},
+  {id:'phys',  name:'Physics',            totalHrs:20, color:'coral'},
+  {id:'cf',    name:'Comp. Fundamentals', totalHrs:16, color:'blue'},
+  {id:'eng',   name:'English',            totalHrs:10, color:'gray'},
+];
+
+const WEEKS = [
+  { tip:"Build foundations — understand concepts, don't memorise yet. Get PYQs from Hamro CSIT.",
+    tasks:[
+      {name:'Mathematics',         badge:'badge-purple', hrs:'6 hrs',   topics:['Sets & Relations','Functions','Logic & Propositions','Truth tables'],          detail:"Revise set theory, types of functions, and propositional logic. Do 10 PYQ problems per topic to spot patterns."},
+      {name:'C Programming',       badge:'badge-teal',   hrs:'6 hrs',   topics:['Data types & operators','Control flow','if/else & switch','Loops'],            detail:"Boards test output-prediction — trace through code manually. Write 5 small programs from scratch each day on paper."},
+      {name:'Digital Logic',       badge:'badge-amber',  hrs:'5 hrs',   topics:['Number systems','Binary conversions','Boolean algebra','Logic gates'],          detail:"Convert between binary, octal, hex fluently. Memorise gate symbols and truth tables cold — easy marks."},
+      {name:'Physics + Fundamentals',badge:'badge-coral',hrs:'5 hrs',   topics:['Mechanics basics','Computer generations','I/O devices','Memory types'],        detail:"Skim Fundamentals — mostly conceptual and high-scoring. Complete notes once. Start Physics mechanics."},
+    ]},
+  { tip:"Start solving PYQs chapter by chapter. Identify weak spots now — don't wait for week 4.",
+    tasks:[
+      {name:'Mathematics',   badge:'badge-purple', hrs:'7 hrs',  topics:['Matrices & Determinants','Group theory','Complex numbers','Permutations & combinations'],  detail:"Matrices are high-yield — row reduction, inverses, eigenvalues. Aim for 15 PYQs this week."},
+      {name:'C Programming', badge:'badge-teal',   hrs:'7 hrs',  topics:['Arrays & strings','Functions','Recursion','Pointers — memory diagrams'],                   detail:"Pointers are the hardest topic — spend 3 hrs here. Draw memory diagrams. Trace Fibonacci & factorial manually."},
+      {name:'Digital Logic', badge:'badge-amber',  hrs:'5 hrs',  topics:['K-map simplification','SOP & POS forms','Combinational circuits','Half & full adders'],    detail:"K-maps appear every year. Do all 2-, 3-, and 4-variable problems from PYQs until they feel automatic."},
+      {name:'Physics',       badge:'badge-coral',  hrs:'5 hrs',  topics:['Oscillations','Waves','Optics basics','Interference & diffraction'],                       detail:"Derive key formulas — don't just memorise. Boards often give derivations as long questions worth big marks."},
+      {name:'English',       badge:'badge-gray',   hrs:'3 hrs',  topics:['Essay structure','Reading comprehension','Grammar review','Vocabulary'],                    detail:"Practice 2–3 essays on tech topics. Focus on clear paragraph structure and transitions."},
+    ]},
+  { tip:"Do at least 2 full past papers per subject under timed conditions. Find gaps and fix them fast.",
+    tasks:[
+      {name:'Mathematics',            badge:'badge-purple', hrs:'8 hrs',  topics:['Calculus — limits','Derivatives','Integration','Sequences & Series'],                              detail:"Do 2 full PYQ papers timed. Mark every wrong answer and review all of them before moving on."},
+      {name:'C Programming',          badge:'badge-teal',   hrs:'6 hrs',  topics:['Structures & unions','File I/O','Dynamic memory','PYQ programs by hand'],                         detail:"Write every PYQ programming question by hand on paper. Boards are written exams — practice this."},
+      {name:'Digital Logic',          badge:'badge-amber',  hrs:'6 hrs',  topics:['Sequential circuits','Flip-flops — JK, D, T','State diagrams','Counters & registers'],             detail:"JK, D, T flip-flops appear every year. Draw state diagrams. Complete 2 PYQ papers."},
+      {name:'Physics + Fundamentals', badge:'badge-coral',  hrs:'5 hrs',  topics:['Electricity & magnetism','OS basics','Memory hierarchy','Networking basics'],                       detail:"Fundamentals: revise memory, OS, networking — all short-answer friendly and easy marks."},
+    ]},
+  { tip:"No new topics. Consolidate, tighten formulas, simulate exam conditions. Sleep 7+ hrs every night.",
+    tasks:[
+      {name:'Days 1–3 — Deep dives',        badge:'badge-purple', hrs:'Maths + C + DL',    topics:['Redo all wrong answers','Write formulas from memory','Algorithm practice','PYQ review'],             detail:"One day per subject. Redo every question you got wrong in weeks 2–3. Write algorithms from memory without looking."},
+      {name:'Days 4–5 — Light subjects',    badge:'badge-coral',  hrs:'Physics + CF + Eng', topics:['Physics derivations','Fundamentals full scan','Timed essay','Grammar final pass'],                   detail:"Physics: redo numerical PYQs. Fundamentals: scan notes once. English: write one timed essay."},
+      {name:'Days 6–7 — Full mock exams',   badge:'badge-gray',   hrs:'Exam mode',          topics:['Full paper — 3 hrs no notes','Check all answers','Identify last gaps','Day 7: rest only'],           detail:"Simulate exact board conditions. Day 7: light review only, rest well, sleep early. You're ready."},
+    ]},
+];
+
+const SK = 'csit_tracker_v2';
+function loadState() { try { return JSON.parse(localStorage.getItem(SK)) || {}; } catch(e) { return {}; } }
+function saveState() { localStorage.setItem(SK, JSON.stringify(state)); }
+
+let state = loadState();
+if (!state.hrs)      state.hrs = {};
+if (!state.topics)   state.topics = {};
+if (!state.examDate) {
+  const d = new Date(); d.setDate(d.getDate()+30);
+  state.examDate = d.toISOString();
+  saveState();
+}
+
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function topicKey(wi, ti, topic) {
+  return 'w'+wi+'_t'+ti+'_'+topic.replace(/[^a-z0-9]/gi,'_').toLowerCase();
+}
+
+function renderSubjects() {
+  const grid = document.getElementById('subjects-grid');
+  grid.innerHTML = '';
+  let totalDone = 0, totalMax = 0;
+  SUBJECTS.forEach(s => {
+    const done = parseFloat(state.hrs[s.id] || 0);
+    const pct = Math.min(100, Math.round(done / s.totalHrs * 100));
+    totalDone += done; totalMax += s.totalHrs;
+    const card = document.createElement('div');
+    card.className = 'subj-card ' + s.color;
+    card.innerHTML =
+      '<div class="subj-top">' +
+        '<div class="subj-name">' + s.name + '</div>' +
+        '<div class="subj-pct">' + pct + '%</div>' +
+      '</div>' +
+      '<div class="subj-hrs-row">' +
+        '<input class="hrs-input" type="number" min="0" max="' + s.totalHrs + '" step="0.5" value="' + done + '" title="Enter hours studied">' +
+        '<span class="hrs-of">/ ' + s.totalHrs + ' hrs</span>' +
+      '</div>' +
+      '<div class="bar-track"><div class="bar-fill" style="width:' + pct + '%"></div></div>' +
+      '<div class="subj-status">' + (pct === 100 ? '✓ Complete' : pct > 0 ? done + ' hrs logged' : 'Not started yet') + '</div>';
+    grid.appendChild(card);
+
+    const inp = card.querySelector('.hrs-input');
+    inp.addEventListener('change', function() {
+      let val = Math.min(s.totalHrs, Math.max(0, parseFloat(this.value) || 0));
+      val = Math.round(val * 2) / 2;
+      this.value = val;
+      state.hrs[s.id] = val;
+      saveState();
+      renderSubjects();
+      updateHeroStats();
+      showToast(s.name + ' — ' + val + ' hrs logged ✓');
+    });
+  });
+  const oPct = Math.round(totalDone / totalMax * 100);
+  document.getElementById('overall-pct').textContent = oPct + '%';
+  document.getElementById('overall-fill').style.width = oPct + '%';
+}
+
+function renderWeeks() {
+  const container = document.getElementById('week-panels');
+  container.innerHTML = '';
+  WEEKS.forEach((week, wi) => {
+    const panel = document.createElement('div');
+    panel.className = 'week-panel' + (wi === 0 ? ' active' : '');
+    panel.id = 'wp' + wi;
+    let html = '<div class="week-tip">' + week.tip + '</div>';
+    week.tasks.forEach((task, ti) => {
+      const topicsHtml = task.topics.map(topic => {
+        const key = topicKey(wi, ti, topic);
+        const done = !!state.topics[key];
+        return '<label class="topic-check' + (done ? ' done' : '') + '" data-key="' + key + '" data-wi="' + wi + '" data-ti="' + ti + '">' +
+          '<span class="check-box">' + (done ? '✓' : '') + '</span>' +
+          '<span class="check-label">' + topic + '</span>' +
+        '</label>';
+      }).join('');
+      html += '<div class="task-card">' +
+        '<div class="task-head"><span class="task-name">' + task.name + '</span><span class="task-badge ' + task.badge + '">' + task.hrs + '</span></div>' +
+        '<div class="topics">' + topicsHtml + '</div>' +
+        '<div class="task-detail">' + task.detail + '</div>' +
+      '</div>';
+    });
+    panel.innerHTML = html;
+    container.appendChild(panel);
+
+    panel.querySelectorAll('.topic-check').forEach(label => {
+      label.addEventListener('click', function(e) {
+        e.preventDefault();
+        const key = this.dataset.key;
+        const nowDone = !state.topics[key];
+        state.topics[key] = nowDone;
+        saveState();
+        this.classList.toggle('done', nowDone);
+        const box = this.querySelector('.check-box');
+        box.textContent = nowDone ? '✓' : '';
+        updateHeroStats();
+        if (nowDone) showToast('Topic done ✓');
+      });
+    });
+  });
+}
+
+function updateHeroStats() {
+  let done = 0, total = 0;
+  WEEKS.forEach((week, wi) => week.tasks.forEach((task, ti) => {
+    task.topics.forEach(topic => {
+      total++;
+      if (state.topics[topicKey(wi, ti, topic)]) done++;
+    });
+  }));
+  document.getElementById('total-topics-done').textContent = done;
+  document.getElementById('total-topics-all').textContent = total;
+  let hrsTotal = 0;
+  SUBJECTS.forEach(s => hrsTotal += parseFloat(state.hrs[s.id] || 0));
+  document.getElementById('total-hrs-done').textContent = hrsTotal;
+}
+
+function updateCountdown() {
+  const examDate = new Date(state.examDate);
+  const now = new Date();
+  const days = Math.max(0, Math.ceil((examDate - now) / (1000*60*60*24)));
+  const elapsed = 30 - days;
+  const pct = Math.max(0, Math.min(100, Math.round(elapsed / 30 * 100)));
+  document.getElementById('days-left').textContent = days;
+  document.getElementById('cd-display').textContent = days;
+  document.getElementById('cd-pct').textContent = pct + '%';
+  setTimeout(() => { document.getElementById('cd-fill').style.width = pct + '%'; }, 300);
+}
+
+function showWeek(i, btn) {
+  document.querySelectorAll('.week-panel').forEach((p, idx) => p.classList.toggle('active', idx === i));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function confirmReset() {
+  if (confirm('Reset all tracked hours and topic checkboxes?\nThis cannot be undone.')) {
+    const d = new Date(); d.setDate(d.getDate() + 30);
+    state = { hrs:{}, topics:{}, examDate: d.toISOString() };
+    saveState();
+    renderSubjects();
+    renderWeeks();
+    updateHeroStats();
+    updateCountdown();
+    showToast('All progress reset.');
+  }
+}
+
+renderSubjects();
+renderWeeks();
+updateHeroStats();
+updateCountdown();
+</script>
+</body>
+</html>
